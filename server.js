@@ -3,9 +3,19 @@
 var express = require('express');
 var app = express();
 
-// Require request and cheerio. This makes the scraping possible
+// Require request, cheerio, and body-parser. This makes the scraping possible
 var request = require('request');
 var cheerio = require('cheerio');
+var bodyParser = require('body-parser');
+
+// uses any static files required by the html files
+app.use(express.static('app/public/'));
+
+// sets up the Express app to handle data parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // Database configuration
 var mongojs = require('mongojs');
@@ -19,56 +29,10 @@ db.on('error', function(err) {
 });
 
 
-// Main route (simple Hello World Message)
-app.get('/', function(req, res) {
-  res.send("Hello world");
-});
 
-app.get('/all', function(req, res) {
-  db.Articles.find({}, function (err, docs) {
-    if (err) throw err
-    res.send(docs);
-  });
-});
-
-app.get('/scrape', function(req, res) {
-	request('http://www.nytimes.com/pages/technology/index.html?action=click&region=TopBar&pgtype=SectionFront&module=SectionsNav&version=BrowseTree&contentCollection=Tech&t=qry170', function (error, response, html) {
-
-	  	var $ = cheerio.load(html);
-
-	  	$('.story').each(function(i, element){
-
-	    	var scrape = $(this).text();
-
-			db.Articles.insert({article: scrape}, function(err, saved){
-				if (err) {
-			      	console.log(err);
-			    } else {
-			    	console.log(saved);
-			    }
-			});
-
-		});
-/*		$('h3').each(function(i, element){
-
-	    	var scrape = $(this).text();
-
-			db.Articles.insert({titles: scrape}, function(err, saved){
-				if (err) {
-			      	console.log(err);
-			    } else {
-			    	console.log(saved);
-			    }
-			});
-
-		});*/
-		res.send("worked");
-	});
-});
-
-
-/* -/-/-/-/-/-/-/-/-/-/-/-/- */
-
+// ROUTES
+require('./app/routes/data-routes/data.js')(app, db);
+require('./app/routes/html-routes/html-routes.js')(app, db);
 
 // listen on port 3000
 app.listen(3000, function() {

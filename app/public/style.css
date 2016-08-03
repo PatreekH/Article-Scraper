@@ -1,0 +1,63 @@
+.articlesDiv{
+	float: left;
+	width: 40%;
+	height: 350px;
+	border: 1px solid black;
+	margin-top: 10%;
+/*	margin-left: 10%;
+	margin-right: 10%;*/
+	padding: 2%;
+	font-size: 15px;
+}
+
+.articleNav{
+	width: 35%;
+	top: 50%;
+	position: fixed;
+}
+
+.back{
+	float: left;
+}
+
+.next{
+	float: right;
+}
+
+.newComment{
+	margin-top: 10%;
+	margin-right: 5%;
+	margin-left: 5%;
+	float: left;
+	width: 20%;
+	height: 350px;
+	border: 1px solid black;
+}
+
+.newComment h3{
+	text-align: center;
+}
+
+.newComment form{
+	height: 80%;
+	text-align: center;
+}
+
+#commentInput{
+	width: 100%;
+	height: 70%;
+}
+
+.comments{
+	margin-top: 10%;
+	margin-right: 5%;
+	margin-left: 5%;
+	float: left;
+	width: 20%;
+	height: 350px;
+	border: 1px solid black;
+}
+
+.comments h3{
+	text-align: center;
+}

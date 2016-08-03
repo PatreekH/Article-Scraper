@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Scraper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<!-- Latest compiled and minified js(jquery) -->
+    <script   src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+<!-- my styles -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+<div class="newComment">
+  <h3>Leave a Comment</h3>
+  <form>
+    Comment:<br>
+    <input id="commentInput" type="text" name="firstname">
+    <br>
+    <button id="submitComment">Submit</button>
+  </form>
+</div>
+
+<div class="articlesDiv">
+
+  <div>
+    <b><h3 class="articleTitle"></h3></b>
+  </div>
+
+  <hr>
+
+	<div class="articles"></div>
+
+	<div class="articleNav">
+		<button class="back">Back</button>
+		<button class="next">Next</button>
+	</div>
+
+</div>
+
+<div class="comments">
+  <h3>Comments</h3>
+</div>
+
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
