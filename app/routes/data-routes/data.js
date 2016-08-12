@@ -1,6 +1,7 @@
 
 var request = require('request');
 var cheerio = require('cheerio');
+var mongojs = require('mongojs');
 var path = require('path');
 
 module.exports = function(app, db){
@@ -45,18 +46,28 @@ module.exports = function(app, db){
 		});
 	});
 
+	// app.get('/article', function(req, res){
+	// 	var counter = req.query.counter;
+	// 	console.log(counter)
+	// });
+
 	app.post('/newcomment', function(req, res){
-    	db.Articles.update({_id: mongojs.ObjectId(req.body.id)}, {$set: {comments: [req.body.comment]}}, function () {
+    	db.Articles.update({_id: mongojs.ObjectId(req.body.id)}, {$set: {comments: req.body.comment}}, function (err, docs) {
     		// the update is complete
     		if (err) throw err
-    		res.send(200);
+    		/*res.json(docs);*/
     	});
+    	db.Articles.find({}, function (err, docs) {
+	    	if (err) throw err
+	    	res.json(docs[req.body.counter]);
+		});
 	});
 
 	app.get('/article', function(req, res){
+		var counter = req.query.id || 0;
 		db.Articles.find({}, function (err, docs) {
 	    	if (err) throw err
-	    	res.json(docs[0]);
+	    	res.json(docs[counter]);
 		});
 	});
 
