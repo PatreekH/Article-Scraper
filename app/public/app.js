@@ -1,27 +1,18 @@
 $(document).ready(function(){
 
+	var num = 0;
+
 	var counter = 0;
 	var comments = [];
 
 	var url = window.location.origin;
 
 	$.ajax({url: url + '/article', method: 'GET'}).done(function(response){
-		/*$(".articleNav").html('<button class="back">Back</button><button class="next">Next</button>')*/
-		$(".articleTitle").html(response.title);
-		$(".articles").html(response.article);
-		$(".comments").html(response.comments);
-		$('#submitComment').attr('data-id', response._id);
-		comments = response.comments;
-		console.log(response);
+		update(response);
+		comments = response.comments
 	});
 
-	function update(response){
-		$(".articleTitle").html(response.title);
-		$(".articles").html(response.article);
-		$(".comments").html(response.comments)
-		$('#submitComment').attr('data-id', response._id)
-		console.log(response);
-	}
+
 
 	/*$('.start').on('click', function(){*/
 	/*});*/
@@ -30,6 +21,7 @@ $(document).ready(function(){
 		var comment = $('#commentInput').val();
 		var thisId = $(this).attr('data-id');
 		comments.push(comment);
+		/*$('#commentInput').reset();*/
 		$.ajax({
 
 			method: 'POST',
@@ -43,7 +35,8 @@ $(document).ready(function(){
 			},
 			success: function(response){
 				//create one function that makes an API call to get current article
-					$(".comments").html(response.comments);
+				$('#commentInput').val('');
+				update(response);
 
 				console.log(response)
 			}
@@ -67,12 +60,13 @@ $(document).ready(function(){
 
 				/*apiCall(response);*/
 				/*comments = [];*/
-				$('#submitComment').attr('data-id', response._id);
+				update(response);
+				comments = response.comments;
+/*				$('#submitComment').attr('data-id', response._id);
 				$(".comments").html(response.comments);
 				$(".articleTitle").html(response.title);
 				$(".articles").html(response.article);
-				comments = response.comments;
-				console.log(response);
+				console.log(response);*/
 			}
 
 		});
@@ -94,12 +88,13 @@ $(document).ready(function(){
 				counter: counter
 			},
 			success: function(response){
+				update(response);
 				comments = response.comments;
-				$('#submitComment').attr('data-id', response._id);
+/*				$('#submitComment').attr('data-id', response._id);
 				$(".comments").html(response.comments);
 				$(".articleTitle").html(response.title);
 				$(".articles").html(response.article);
-				console.log(response);
+				console.log(response);*/
 			}
 
 		});

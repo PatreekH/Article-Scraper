@@ -61,8 +61,13 @@
 	width: 20%;
 	height: 350px;
 	border: 1px solid black;
+	overflow: auto;
 }
 
 .commentsDiv h3{
 	text-align: center;
+}
+
+.comments{
+	margin-left: 5%;
 }
