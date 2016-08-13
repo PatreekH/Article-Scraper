@@ -1,24 +1,33 @@
 $(document).ready(function(){
 
+	var num = 0;
+
 	var counter = 0;
 	var comments = [];
 
 	var url = window.location.origin;
 
 	$.ajax({url: url + '/article', method: 'GET'}).done(function(response){
-		/*$(".articleNav").html('<button class="back">Back</button><button class="next">Next</button>')*/
-		$(".articleTitle").html(response.title);
+		update(response);
+/*		$(".articleTitle").html(response.title);
 		$(".articles").html(response.article);
-		$(".comments").html(response.comments);
+		for (i = 0; i < response.comments.length; i++){
+			num++;
+			$(".comments").append("<div>" + num + ". " + response.comments[i] + "</div>");
+		}
 		$('#submitComment').attr('data-id', response._id);
 		comments = response.comments;
-		console.log(response);
+		console.log(response);*/
 	});
 
 	function update(response){
+		comments = response.comments;
 		$(".articleTitle").html(response.title);
 		$(".articles").html(response.article);
-		$(".comments").html(response.comments)
+		for (i = 0; i < response.comments.length; i++){
+			num++;
+			$(".comments").append("<div>" + num + ". " + response.comments[i] + "</div>");
+		}
 		$('#submitComment').attr('data-id', response._id)
 		console.log(response);
 	}
@@ -43,9 +52,10 @@ $(document).ready(function(){
 			},
 			success: function(response){
 				//create one function that makes an API call to get current article
+				num = 0;
 				for (i = 0; i < response.comments.length; i++){
-					var num = 1;
-					$(".comments").html("<div>" + num + ". " + response.comments[i] + "</div>");
+					num++;
+					$(".comments").html("<div>" + num + ". " + response.comments[i] + "</div>" + "<br>");
 				}
 
 				console.log(response)
@@ -70,11 +80,11 @@ $(document).ready(function(){
 
 				/*apiCall(response);*/
 				/*comments = [];*/
+				comments = response.comments;
 				$('#submitComment').attr('data-id', response._id);
 				$(".comments").html(response.comments);
 				$(".articleTitle").html(response.title);
 				$(".articles").html(response.article);
-				comments = response.comments;
 				console.log(response);
 			}
 
