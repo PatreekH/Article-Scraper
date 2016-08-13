@@ -1,28 +1,25 @@
 $(document).ready(function(){
 
-	var num = 0;
-
 	var counter = 0;
 	var comments = [];
 
 	var url = window.location.origin;
 
 	$.ajax({url: url + '/article', method: 'GET'}).done(function(response){
-		update(response);
-		comments = response.comments
+		/*$(".articleNav").html('<button class="back">Back</button><button class="next">Next</button>')*/
+		$(".articleTitle").html(response.title);
+		$(".articles").html(response.article);
+		$(".comments").html(response.comments);
+		$('#submitComment').attr('data-id', response._id);
+		comments = response.comments;
+		console.log(response);
 	});
 
 	function update(response){
-		/*comments = response.comments;*/
-		$(".comments").empty();
 		$(".articleTitle").html(response.title);
 		$(".articles").html(response.article);
-		num = 0;
-		for (i = 0; i < response.comments.length; i++){
-			num++;
-			$(".comments").append("<div>" + num + ". " + response.comments[i] + "</div>");
-		};
-		$('#submitComment').attr('data-id', response._id);
+		$(".comments").html(response.comments)
+		$('#submitComment').attr('data-id', response._id)
 		console.log(response);
 	}
 
@@ -33,7 +30,6 @@ $(document).ready(function(){
 		var comment = $('#commentInput').val();
 		var thisId = $(this).attr('data-id');
 		comments.push(comment);
-		/*$('#commentInput').reset();*/
 		$.ajax({
 
 			method: 'POST',
@@ -47,8 +43,10 @@ $(document).ready(function(){
 			},
 			success: function(response){
 				//create one function that makes an API call to get current article
-				$('#commentInput').val('');
-				update(response);
+				for (i = 0; i < response.comments.length; i++){
+					var num = 1;
+					$(".comments").html("<div>" + num + ". " + response.comments[i] + "</div>");
+				}
 
 				console.log(response)
 			}
@@ -72,13 +70,12 @@ $(document).ready(function(){
 
 				/*apiCall(response);*/
 				/*comments = [];*/
-				update(response);
-				comments = response.comments;
-/*				$('#submitComment').attr('data-id', response._id);
+				$('#submitComment').attr('data-id', response._id);
 				$(".comments").html(response.comments);
 				$(".articleTitle").html(response.title);
 				$(".articles").html(response.article);
-				console.log(response);*/
+				comments = response.comments;
+				console.log(response);
 			}
 
 		});
@@ -100,13 +97,12 @@ $(document).ready(function(){
 				counter: counter
 			},
 			success: function(response){
-				update(response);
 				comments = response.comments;
-/*				$('#submitComment').attr('data-id', response._id);
+				$('#submitComment').attr('data-id', response._id);
 				$(".comments").html(response.comments);
 				$(".articleTitle").html(response.title);
 				$(".articles").html(response.article);
-				console.log(response);*/
+				console.log(response);
 			}
 
 		});
